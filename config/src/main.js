@@ -1,30 +1,27 @@
-import './style.css';
-import { initHeader } from './components/header.js';
-import { initSidebar } from './components/sidebar.js';
-import { createRobotModal } from './components/modals/robotModal.js';
-import { loadConfig } from './state/configState.js';
-import { initScene } from './components/scene.js';
+import "./style.css";
+import { initHeader } from "./components/header.js";
+import { initSidebar } from "./components/sidebar.js";
+import { initScene } from "./components/scene.js";
+import { ModalFactory } from "./components/modals/ModalFactory.js";
+import { loadConfig } from "./state/configState.js";
 
-// Initialize App
+// 🚀 Application Entry Point
 function init() {
-  // تحميل البيانات المحفوظة
+  console.log("🚀 Initializing Robot Configuration System...");
+
+  // Load saved configuration
   loadConfig();
-  
-  // إنشاء المكونات
+
+  // Initialize UI components
   initHeader();
   initSidebar();
-  
-  // إنشاء المودالات
-  createRobotModal();
-  // createCameraModal();
-  // createCameraConfigModal();
-  // createEOATModal();
-  
-  // إنشاء المشهد 3D
   initScene();
+
+  // Factory Pattern - Create all modals
+  ModalFactory.createAll();
+
+  console.log("✅ Application initialized successfully!");
 }
 
-
-
-// Start App
+// Start the application
 init();

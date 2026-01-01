@@ -8,8 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "dark-bg": "#232931", // لونك الاحترافي
-        "robot-green": "#005f4e",
+       "dark-bg": "#232931",
+        "primary": "#004d40",
+        "primary-dark": "#00332c",
+        "custom-teal": "#4ECCA3"
       },
     },
   },
