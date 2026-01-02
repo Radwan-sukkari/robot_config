@@ -1,4 +1,4 @@
-<img width="1918" height="863" alt="EoAT_config" src="https://github.com/user-attachments/assets/9546b1ef-59ef-4863-a170-61491c838d5f" /># 🤖 Robot Configuration System
+<img width="1918" height="863" alt="config" src="https://github.com/user-attachments/assets/9546b1ef-59ef-4863-a170-61491c838d5f" /># 🤖 Robot Configuration System
 
 > A modern web-based configuration system for industrial robots with an intuitive interface and factory pattern architecture.
 
@@ -85,19 +85,19 @@ The first phase focuses on creating a robust configuration interface where users
 > **Note**: Screenshots are stored in the `docs/images/` directory
 
 ### Configuration Mode
-![Configuration Overview](docs/images/config.png)
+![Configuration Overview](config/docs/images/config.png)
 *Main configuration interface with sidebar*
 
 ### Robot Configuration Modal
-![Robot Config](docs/images/robot_config.png)
+![Robot Config](config/docs/images/robot_config.png)
 *Robot configuration dialog*
 
 ### Camera Configuration
-![Camera Config](docs/images/camera_config.png)
+![Camera Config](config/docs/images/camera_config.png)
 *Camera setup interface*
 
 ### EOAT Configuration
-![EOAT Config](docs/images/EoAT_config.png)
+![EOAT Config](config/docs/images/EoAT_config.png)
 *End-of-arm tool configuration with dynamic fields*
 
 
