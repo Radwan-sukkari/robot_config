@@ -1,4 +1,4 @@
-<img width="1918" height="863" alt="config" src="https://github.com/user-attachments/assets/9546b1ef-59ef-4863-a170-61491c838d5f" /># 🤖 Robot Configuration System
+# 🤖 Robot Configuration System
 
 > A modern web-based configuration system for industrial robots with an intuitive interface and factory pattern architecture.
 
