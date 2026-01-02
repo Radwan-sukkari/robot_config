@@ -1,4 +1,4 @@
-# 🤖 Robot Configuration System
+<img width="1918" height="863" alt="EoAT_config" src="https://github.com/user-attachments/assets/9546b1ef-59ef-4863-a170-61491c838d5f" /># 🤖 Robot Configuration System
 
 > A modern web-based configuration system for industrial robots with an intuitive interface and factory pattern architecture.
 
@@ -85,24 +85,21 @@ The first phase focuses on creating a robust configuration interface where users
 > **Note**: Screenshots are stored in the `docs/images/` directory
 
 ### Configuration Mode
-![Configuration Overview](docs/images/config-overview.png)
+![Configuration Overview](docs/images/config.png)
 *Main configuration interface with sidebar*
 
 ### Robot Configuration Modal
-![Robot Config](docs/images/robot-config-modal.png)
+![Robot Config](docs/images/robot_config.png)
 *Robot configuration dialog*
 
 ### Camera Configuration
-![Camera Config](docs/images/camera-config-modal.png)
+![Camera Config](docs/images/camera_config.png)
 *Camera setup interface*
 
 ### EOAT Configuration
-![EOAT Config](docs/images/eoat-config-modal.png)
+![EOAT Config](docs/images/EoAT_config.png)
 *End-of-arm tool configuration with dynamic fields*
 
-### Completed Configuration
-![All Configured](docs/images/all-configured.png)
-*All components configured (green checkmarks visible)*
 
 ---
 
@@ -118,8 +115,8 @@ The first phase focuses on creating a robust configuration interface where users
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/robot-config-system.git
-   cd robot-config-system
+   git clone https://github.com/Radwan-sukkari/robot-config-system.git
+   cd config
 ```
 
 2. **Install dependencies**
@@ -188,10 +185,10 @@ robot-config-system/
 ├── docs/
 │   └── images/              # 📸 Screenshots go here
 │       ├── config-overview.png
-│       ├── robot-config-modal.png
-│       ├── camera-config-modal.png
-│       ├── eoat-config-modal.png
-│       └── all-configured.png
+│       ├── robot-config.png
+│       ├── camera-config.png
+│       ├── eoat-config.png
+│       └── configured.png
 │
 ├── public/
 │   └── urdf/                # URDF robot files (future use)
@@ -357,17 +354,12 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@Radwan-sukkari](https://github.com/Radwan-sukkari)
+- Email: radwansukkari123@gmail.com
 
 ---
 
@@ -379,19 +371,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
 
-If you have any questions or need help, please:
-- Open an issue on GitHub
-- Contact via email
-- Check the [Wiki](https://github.com/yourusername/robot-config-system/wiki) for detailed documentation
-
----
-
-<div align="center">
-
-**Made with ❤️ for the robotics community**
-
-[⬆ Back to Top](#robot-configuration-system)
-
-</div>
