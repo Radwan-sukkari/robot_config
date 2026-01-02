@@ -115,8 +115,10 @@ The first phase focuses on creating a robust configuration interface where users
 
 1. **Clone the repository**
 ```bash
-   git clone [https://github.com/Radwan-sukkari/robot-config-system.git](https://github.com/Radwan-sukkari/robot_config.git)
+   git clone https://github.com/Radwan-sukkari/robot_config.git
    cd robot-config
+   cd config
+  
 ```
 
 2. **Install dependencies**
