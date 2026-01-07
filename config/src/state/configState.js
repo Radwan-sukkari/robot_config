@@ -79,6 +79,7 @@ export function loadConfig() {
   if (saved) {
     try {
       const loaded = JSON.parse(saved);
+      //خذ كل القيم الموجودة في loaded وضعها داخل configState".
       Object.assign(configState, loaded);
       updateStartButton();
       console.log("✅ Configuration loaded from localStorage");
@@ -137,3 +138,5 @@ function updateSidebarIndicators() {
   const event = new CustomEvent("updateSidebar");
   window.dispatchEvent(event);
 }
+// أضف هذا السطر في آخر ملف configState.js
+window.resetMyConfig = resetConfig;
