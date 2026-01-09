@@ -1,9 +1,9 @@
-# 🤖 Robot Configuration System
+# 🤖 Robot Configuration & Simulation System
 
-> A modern web-based configuration system for industrial robots with an intuitive interface and factory pattern architecture.
+> A comprehensive web-based platform for industrial robot configuration and real-time 3D simulation
 
-![Project Status](https://img.shields.io/badge/status-Phase%201%20Complete-success)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Project Status](https://img.shields.io/badge/status-Production%20Ready-success)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
@@ -11,14 +11,15 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
-- [Screenshots](#screenshots)
+- [Key Features](#key-features)
+- [Demo](#demo)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
+- [Quick Start](#quick-start)
+- [Project Architecture](#project-architecture)
 - [Configuration Guide](#configuration-guide)
-- [Future Features](#future-features)
+- [Live Simulation](#live-simulation)
+- [Technologies](#technologies)
+- [API Reference](#api-reference)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -26,63 +27,97 @@
 
 ## 🎯 Overview
 
-The **Robot Configuration System** is a comprehensive web application designed to simplify the setup and configuration of industrial robots. This system provides an intuitive user interface for configuring robots, cameras, end-of-arm tools (EoAT), and camera calibration settings.
+This system provides an end-to-end solution for configuring and simulating industrial robots in a browser environment. Whether you're setting up a new robotic workcell or testing different configurations, this tool streamlines the entire workflow from initial setup to live 3D visualization.
 
-### Current Phase: Configuration Mode ✅
+### What Makes This Different?
 
-The first phase focuses on creating a robust configuration interface where users can:
-- Configure robot parameters (brand, type, IP, positioning)
-- Set up camera specifications (type, resolution, focal points)
-- Define camera configuration (hand-in-eye vs hand-to-eye)
-- Configure end-of-arm tools (shape, dimensions)
+- **Zero Installation Required** - Runs entirely in the browser
+- **Real URDF Support** - Load actual robot models (UR5, UR10, UR20)
+- **Live 3D Simulation** - See changes in real-time
+- **Persistent Configuration** - Your settings are automatically saved
+- **Industrial Grade** - Built with real-world robotics workflows in mind
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### ✅ **Phase 1: Configuration Mode** (Current)
+### 🔧 Configuration Mode
 
-#### 🤖 Robot Configuration
-- Select robot brand (Universal Robots, ABB, KUKA, Fanuc)
-- Choose robot type (UR5, UR10, UR20)
-- Configure IP addresses (robot & host PC)
-- Set position and orientation (X, Y, Z, RX, RY, RZ)
+**Robot Setup**
+- Support for major brands (Universal Robots, ABB, KUKA, Fanuc)
+- Multiple robot types (UR5, UR10, UR20)
+- Network configuration (Robot IP, Host PC IP)
+- Precise positioning (X, Y, Z translation + RX, RY, RZ rotation)
 
-#### 📷 Camera Configuration
-- Select camera type (Orbbec, Intel RealSense, Microsoft Kinect)
-- Set image dimensions (width, height)
-- Configure camera intrinsics (focal points, central points)
+**Vision System Setup**
+- Multiple camera types (Orbbec, RealSense, Kinect)
+- Resolution configuration (width, height)
+- Camera intrinsics (focal points, principal points)
+- Calibration file support (.yml, .yaml, .json, .toml)
+- Teaching modes (Hand-in-eye / Hand-to-eye)
 
-#### 🔧 Camera Teaching Configuration
-- Choose teaching type:
-  - **Hand-in-eye**: Camera moves with the robot
-  - **Hand-to-eye**: Fixed camera position
-- Upload calibration files (.yml, .yaml, .json, .toml)
+**End Effector Tools**
+- Flexible geometry (Cylinder, Cube)
+- Parametric dimensions (radius, height, length, width)
+- Visual 3D representation
+- Dynamic form generation
 
-#### 🔨 End-of-Arm Tool (EoAT) Configuration
-- Select tool shape:
-  - **Cylinder**: Define radius and height
-  - **Cube**: Define length, width, and height
-- Dynamic form fields based on shape selection
+**Smart Validation**
+- Real-time field validation
+- IP address format checking
+- Required field enforcement
+- Clear error messaging
 
-#### 💾 State Management
-- Automatic save to localStorage
-- Configuration persistence across sessions
-- Real-time validation
-- Visual indicators for completed configurations
+### 🎬 Live Simulation Mode
 
-#### 🎨 User Interface
-- Clean, modern design with dark theme
-- Responsive layout
-- Modal-based configuration dialogs
-- Real-time feedback and validation
-- Green checkmarks for completed configurations
+**3D Visualization**
+- Full 3D scene with professional lighting
+- Orbit controls (pan, zoom, rotate)
+- Shadow rendering
+- Grid floor reference
+
+**Object Management**
+- Class list sidebar showing all scene objects
+- Object selection and highlighting
+- Properties panel for detailed control
+- Real-time transform updates
+
+**Interactive Editing**
+- Modify object positions (X, Y, Z in millimeters)
+- Adjust rotations (RX, RY, RZ in degrees)
+- Update robot configuration on-the-fly
+- Change tool geometry dynamically
+- Edit camera parameters
+
+**Scene Control**
+- Add/remove objects
+- Reset camera view
+- Clear scene
+- Start new configuration
+
+---
+
+## 🎥 Demo
+
+### Configuration Flow
+1. Click **Robot** → Fill in brand, type, IPs, and position
+2. Click **Camera** → Set type, resolution, and intrinsics
+3. Click **Camera Config** → Choose teaching method and upload calibration
+4. Click **EOAT** → Define tool shape and dimensions
+5. Click **▶ Start Simulation** → Enter live mode
+
+### Simulation Workflow
+1. View all objects in **Class List** sidebar
+2. Click any object to select it
+3. Edit properties in **Properties Panel**
+4. See changes applied instantly in 3D view
+5. Export configuration when ready
 
 ---
 
 ## 📸 Screenshots
 
-> **Note**: Screenshots are stored in the `docs/images/` directory
+> Note: Screenshots are stored in the docs/images/ directory
 
 ### Configuration Mode
 ![Configuration Overview](config/docs/images/config.png)
@@ -102,155 +137,158 @@ The first phase focuses on creating a robust configuration interface where users
 
 
 ---
-
 ## 🚀 Installation
 
 ### Prerequisites
 
-- **Node.js** v16 or higher
-- **npm** v8 or higher
-- Modern web browser (Chrome, Firefox, Edge)
-
-### Setup Steps
-
-1. **Clone the repository**
 ```bash
-   git clone https://github.com/Radwan-sukkari/robot_config.git
-   cd robot-config
-   cd config
-  
+Node.js >= 16.x
+npm >= 8.x
+Modern browser (Chrome, Firefox, Edge, Safari)
 ```
 
-2. **Install dependencies**
+### Clone and Install
+
 ```bash
-   npm install
+# Clone repository
+git clone https://github.com/Radwan-sukkari/robot_config.git
+cd robot_config/config
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-3. **Run development server**
+### Production Build
+
 ```bash
-   npm run dev
-```
-
-4. **Open in browser**
-```
-   Navigate to: http://localhost:5173
-```
-
-### Build for Production
-```bash
+# Build for production
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-The built files will be in the `dist/` directory.
+The optimized build will be in `dist/` directory.
 
 ---
 
-## 📖 Usage
+## 🎮 Quick Start
 
-### Basic Workflow
+### First Time Setup
 
 1. **Start the application**
-```bash
+   ```bash
    npm run dev
-```
+   ```
+   Navigate to `http://localhost:5173`
 
-2. **Configure components** (click buttons in left sidebar):
-   - ➕ **Robot**: Set robot brand, type, IP, and positioning
-   - ➕ **Camera**: Configure camera type and parameters
-   - ➕ **Camera Config**: Choose teaching type and upload calibration
-   - ➕ **EOAT**: Define tool shape and dimensions
+2. **Configure your robot**
+   - Click the **Robot** button in sidebar
+   - Enter robot details and click **OK**
+   - Green checkmark appears when saved
 
-3. **Complete all configurations**
-   - Green checkmarks appear when each component is configured
-   - "Start Simulation" button becomes active when all components are ready
+3. **Set up your camera**
+   - Click **Camera** button
+   - Fill in camera specifications
+   - Configure teaching method in **Camera Config**
 
-4. **Start simulation**
-   - Click "▶ Start Simulation" to proceed to Phase 2 (Live Simulation Mode)
+4. **Define your tool**
+   - Click **EOAT** button
+   - Select shape and enter dimensions
 
-### Keyboard Shortcuts
+5. **Launch simulation**
+   - Click **▶ Start Simulation**
+   - Your configuration loads in 3D space
 
-- `Esc` - Close any open modal
-- Click outside modal - Close modal
+### Using the Simulator
 
-### Reset Configuration
+**Navigate the scene:**
+- Left-click + drag: Rotate view
+- Right-click + drag: Pan
+- Scroll wheel: Zoom in/out
 
-Open browser console and run:
-```javascript
-window.resetMyConfig()
-```
+**Edit objects:**
+- Select object from Class List
+- Modify values in Properties Panel
+- Click **Update** to apply changes
+
+**Keyboard shortcuts:**
+- `Esc`: Close modal
+- Double-click: Quick edit object
 
 ---
 
-## 📁 Project Structure
+## 📐 Project Architecture
+
 ```
-robot-config-system/
-├── docs/
-│   └── images/              # 📸 Screenshots go here
-│       ├── config-overview.png
-│       ├── robot-config.png
-│       ├── camera-config.png
-│       ├── eoat-config.png
-│       └── configured.png
-│
+config/
 ├── public/
-│   └── urdf/                # URDF robot files (future use)
+│   └── urdfs/               # Robot URDF models
+│       ├── ur10/
+│       ├── ur20/
+│       └── ur5/
 │
 ├── src/
 │   ├── components/
-│   │   ├── modals/
-│   │   │   ├── BaseModal.js          # 🏗️ Base modal class
-│   │   │   ├── ModalFactory.js       # 🏭 Factory pattern
+│   │   ├── modals/          # Configuration dialogs
+│   │   │   ├── BaseModal.js
+│   │   │   ├── ModalFactory.js
 │   │   │   └── configs/
-│   │   │       ├── robotConfig.js    # Robot configuration
-│   │   │       ├── cameraConfig.js   # Camera configuration
-│   │   │       ├── cameraConfigConfig.js # Camera teaching config
-│   │   │       └── eoatConfig.js     # EOAT configuration
+│   │   │       ├── robotConfig.js
+│   │   │       ├── cameraConfig.js
+│   │   │       ├── cameraConfigConfig.js
+│   │   │       └── eoatConfig.js
 │   │   │
-│   │   ├── header.js         # Header component
-│   │   ├── sidebar.js        # Sidebar with config buttons
-│   │   └── scene.js          # Main scene container
+│   │   ├── liveSimulation/  # 3D simulation mode
+│   │   │   ├── LiveSimulation.js
+│   │   │   ├── LiveSimHeader.js
+│   │   │   ├── Canvas3D.js
+│   │   │   ├── ClassList.js
+│   │   │   └── PropertiesPanel.js
+│   │   │
+│   │   ├── header.js
+│   │   ├── sidebar.js
+│   │   └── scene.js
 │   │
-│   ├── state/
-│   │   ├── configState.js    # 💾 Configuration state management
-│   │   └── sceneState.js     # Scene state (future use)
+│   ├── scene/               # 3D scene management
+│   │   ├── SceneManager.js
+│   │   └── RobotLoader.js
+│   │
+│   ├── state/               # State management
+│   │   ├── configState.js
+│   │   └── sceneState.js
 │   │
 │   ├── utils/
-│   │   └── validators.js     # ✅ Validation utilities
+│   │   └── validators.js
 │   │
-│   ├── main.js               # 🚀 Application entry point
-│   └── style.css             # Global styles
+│   ├── main.js
+│   └── style.css
 │
-├── index.html                # Main HTML file
-├── package.json              # Dependencies
-├── tailwind.config.js        # Tailwind configuration
-├── vite.config.js            # Vite configuration
-└── README.md                 # This file
+├── index.html
+├── package.json
+├── tailwind.config.js
+└── vite.config.js
 ```
 
----
-
-## 🛠️ Technologies Used
-
-### Frontend Framework
-- **Vite** - Lightning-fast build tool
-- **Vanilla JavaScript** (ES6+) - No framework overhead
-- **HTML5** & **CSS3**
-
-### Styling
-- **Tailwind CSS** - Utility-first CSS framework
-- **Custom Design System** - Dark theme with teal accents
-
 ### Design Patterns
-- **Factory Pattern** - For modal creation and management
-- **State Management** - Centralized configuration state
-- **Module Pattern** - Clean code organization
 
-### Storage
-- **LocalStorage** - Configuration persistence
+**Factory Pattern**
+- `ModalFactory` creates configuration modals on demand
+- Reduces code duplication
+- Easy to extend with new configuration types
 
-### Development Tools
-- **PostCSS** - CSS processing
-- **Autoprefixer** - Browser compatibility
+**State Management**
+- Centralized state in `configState` and `sceneState`
+- Automatic localStorage persistence
+- Event-driven updates across components
+
+**Component Architecture**
+- Self-contained, reusable components
+- Clear separation of concerns
+- Easy to test and maintain
 
 ---
 
@@ -258,99 +296,320 @@ robot-config-system/
 
 ### Robot Configuration
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| Robot Name | Text | Custom robot identifier | "Production Robot 01" |
-| Robot Brand | Select | Manufacturer | Universal Robots |
-| Robot Type | Select | Model number | UR10 |
-| Robot IP | Text | Robot IP address | 192.168.1.100 |
-| PC/Host IP | Text | Host computer IP | 192.168.1.10 |
-| Translation | Numbers | Position (mm) | X: 0, Y: 0, Z: 0 |
-| Rotation | Numbers | Orientation (degrees) | RX: 0, RY: 0, RZ: 0 |
+| Parameter | Type | Range/Format | Example |
+|-----------|------|--------------|---------|
+| Name | String | Any text | "Cell 1 Robot" |
+| Brand | Select | UR, ABB, KUKA, Fanuc | Universal Robots |
+| Type | Select | UR5, UR10, UR20 | UR10 |
+| Robot IP | String | IPv4 format | 192.168.1.100 |
+| PC IP | String | IPv4 format | 192.168.1.10 |
+| X Position | Number | mm | 0 - 5000 |
+| Y Position | Number | mm | 0 - 5000 |
+| Z Position | Number | mm | 0 - 5000 |
+| RX Rotation | Number | degrees | -180 to 180 |
+| RY Rotation | Number | degrees | -180 to 180 |
+| RZ Rotation | Number | degrees | -180 to 180 |
 
 ### Camera Configuration
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| Camera Type | Select | Camera model | Intel RealSense |
-| Width | Number | Image width (pixels) | 1920 |
-| Height | Number | Image height (pixels) | 1080 |
-| FX | Number | Focal point X | 615.123 |
-| FY | Number | Focal point Y | 615.456 |
-| CX | Number | Central point X | 320.5 |
-| CY | Number | Central point Y | 240.5 |
+| Parameter | Type | Description | Typical Range |
+|-----------|------|-------------|---------------|
+| Camera Type | Select | Device model | Orbbec, RealSense, Kinect |
+| Width | Integer | Image width in pixels | 640 - 1920 |
+| Height | Integer | Image height in pixels | 480 - 1080 |
+| FX | Float | Focal length X | 500 - 1000 |
+| FY | Float | Focal length Y | 500 - 1000 |
+| CX | Float | Principal point X | Width/2 ± 50 |
+| CY | Float | Principal point Y | Height/2 ± 50 |
 
-### Camera Teaching Configuration
+### Teaching Configuration
 
-| Field | Type | Description |
-|-------|------|-------------|
-| Teaching Type | Select | Hand-in-eye or Hand-to-eye |
-| Calibration File | File | .yml, .yaml, .json, or .toml file |
+| Parameter | Description |
+|-----------|-------------|
+| Hand-in-eye | Camera mounted on robot (moves with end effector) |
+| Hand-to-eye | Camera fixed in workspace (stationary) |
+| Calibration File | Camera-to-robot transformation matrix |
 
 ### EOAT Configuration
 
-#### Cylinder
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| Radius | Number | Cylinder radius (mm) | 50 |
-| Height | Number | Cylinder height (mm) | 100 |
+**Cylinder Tool**
+- Radius: Tool radius in mm (e.g., 50)
+- Height: Tool height in mm (e.g., 100)
 
-#### Cube
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| Length | Number | Cube length (mm) | 50 |
-| Width | Number | Cube width (mm) | 50 |
-| Height | Number | Cube height (mm) | 100 |
+**Cube Tool**
+- Length: X dimension in mm
+- Width: Y dimension in mm
+- Height: Z dimension in mm
 
 ---
 
-## 🔮 Future Features
+## 🎬 Live Simulation
 
-### Phase 2: Live Simulation Mode (In Development)
+### Scene Objects
 
-- [ ] 3D robot visualization with Three.js
-- [ ] Real-time robot model loading (URDF support)
-- [ ] Interactive 3D scene
-- [ ] Object manipulation (translation, rotation)
-- [ ] Properties panel for scene objects
-- [ ] Class list for managing objects
+The simulation manages these object types:
+
+**Floor**
+- 10m x 10m grid plane
+- Non-deletable reference surface
+- Receives shadows
+
+**Robot**
+- Full URDF model with accurate kinematics
+- Configured brand/type displayed
+- Position and orientation editable
+- Can attach tools to end effector
+
+**Camera**
+- 3D representation (body + lens)
+- Shows configured type
+- Positioning adjustable
+- Visual indicator for FOV (future feature)
+
+**Tool (EOAT)**
+- Attached to robot end effector or standalone
+- Geometry updates when dimensions change
+- Shape can be swapped (cylinder ↔ cube)
+
+### Properties Panel
+
+For any selected object, you can modify:
+
+**Transform Properties**
+- Position (X, Y, Z) in millimeters
+- Rotation (RX, RY, RZ) in degrees
+- Updates applied in real-time
+
+**Object-Specific Properties**
+- Robot: Name, Brand, Type, IPs
+- Camera: Type, Resolution, Intrinsics
+- Tool: Shape, Dimensions
+
+**Actions**
+- **Update**: Apply changes to scene
+- **Delete**: Remove object (except floor)
+
+### Scene Navigation
+
+**Mouse Controls**
+- Left drag: Orbit around center
+- Right drag: Pan left/right/up/down
+- Scroll: Zoom in/out
+- Double-click: Focus on object (future)
+
+**Reset View**
+- Click "🔄 Reset View" in header
+- Returns camera to default position (3, 3, 3)
+- Resets orbit target to origin
+
+---
+
+## 🛠️ Technologies
+
+### Core Stack
+- **Vite 4** - Build tool and dev server
+- **Three.js r128** - 3D graphics engine
+- **urdf-loader** - URDF file parsing for robots
+- **Tailwind CSS 3** - Utility-first styling
+- **Vanilla JavaScript (ES6+)** - No framework overhead
+
+### Libraries
+- **OrbitControls** - 3D camera controls
+- **PostCSS** - CSS processing
+- **Autoprefixer** - CSS vendor prefixes
+
+### Development Tools
+- **ESLint** - Code linting (optional)
+- **Prettier** - Code formatting (optional)
+
+---
+
+## 📚 API Reference
+
+### Configuration State
+
+```javascript
+import { configState, saveConfig, loadConfig } from './state/configState.js';
+
+// Save configuration
+saveConfig('robot', {
+  name: 'Robot 1',
+  brand: 'Universal Robots',
+  type: 'UR10',
+  ip: '192.168.1.100',
+  pcIp: '192.168.1.10',
+  translation: { x: 0, y: 0, z: 0 },
+  rotation: { rx: 0, ry: 0, rz: 0 }
+});
+
+// Load configuration
+loadConfig();
+
+// Check if all configured
+import { isAllConfigured } from './state/configState.js';
+if (isAllConfigured()) {
+  // Ready to start simulation
+}
+```
+
+### Scene State
+
+```javascript
+import { 
+  addSceneObject, 
+  removeSceneObject, 
+  updateSceneObject,
+  selectObject 
+} from './state/sceneState.js';
+
+// Add object to scene
+addSceneObject('tool', {
+  type: 'tool',
+  name: 'Gripper',
+  position: { x: 0, y: 1600, z: 0 },
+  rotation: { x: 0, y: 0, z: 0 }
+});
+
+// Update object
+updateSceneObject('tool', {
+  position: { x: 100, y: 1600, z: 50 }
+});
+
+// Remove object
+removeSceneObject('tool');
+
+// Select object
+selectObject('robot');
+```
+
+### Modal Factory
+
+```javascript
+import { ModalFactory } from './components/modals/ModalFactory.js';
+
+// Open configuration modal
+ModalFactory.open('robot');
+
+// Close modal
+ModalFactory.close('robot');
+
+// Get modal instance
+const modal = ModalFactory.get('robot');
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+We welcome contributions! Here's how to get started:
+
+### Development Setup
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create a feature branch
+   ```bash
+   git checkout -b feature/my-new-feature
+   ```
+3. Make your changes
+4. Test thoroughly
+5. Commit with clear messages
+   ```bash
+   git commit -m "Add support for custom tool shapes"
+   ```
+6. Push to your fork
+   ```bash
+   git push origin feature/my-new-feature
+   ```
+7. Open a Pull Request
 
-### Code Style
+### Code Guidelines
 
-- Use ES6+ features
-- Follow existing naming conventions
+- Use ES6+ modern JavaScript
+- Follow existing code style
 - Add comments for complex logic
-- Update README for new features
+- Update documentation
+- Test in multiple browsers
+
+### Adding New Robot Types
+
+1. Add URDF files to `public/urdfs/[robot-name]/`
+2. Update `RobotLoader.js` paths
+3. Add to `robotConfig.js` options
+4. Test loading in simulation
 
 ---
 
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**"Robot not loading in 3D"**
+- Check that URDF files exist in `public/urdfs/`
+- Verify mesh files (.stl, .dae) are present
+- Check browser console for errors
+
+**"Configuration not saving"**
+- Ensure localStorage is enabled in browser
+- Clear cache and try again
+- Check browser console for errors
+
+**"Start Simulation button disabled"**
+- Verify all four configurations are complete
+- Look for green checkmarks on all sidebar buttons
+- Check console for validation errors
+
+**"3D scene is black"**
+- Check WebGL support in browser
+- Update graphics drivers
+- Try a different browser
+
+---
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
+---
 
 ## 👨‍💻 Author
 
 **Radwan Sukkari**
 - GitHub: [@Radwan-sukkari](https://github.com/Radwan-sukkari)
 - Email: radwansukkari123@gmail.com
+- LinkedIn: [Radwan Sukkari](https://linkedin.com/in/radwan-sukkari)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Three.js community for 3D visualization resources
-- Tailwind CSS for the excellent utility framework
-- Universal Robots for robot documentation
+- Three.js team for the amazing 3D library
+- Universal Robots for URDF model specifications
+- Open-source robotics community
+- Tailwind CSS for making styling enjoyable
 
 ---
 
+## 🔮 Roadmap
 
+### Upcoming Features
+- [ ] Joint angle control for robot
+- [ ] Trajectory planning and visualization
+- [ ] Collision detection
+- [ ] Multiple robot support
+- [ ] Export scene as URDF
+- [ ] Import existing configurations
+- [ ] Camera FOV visualization
+- [ ] Touch controls for mobile
+- [ ] Dark/light theme toggle
+- [ ] Multi-language support
+
+### Long-term Vision
+- Real robot connection via ROS
+- Cloud configuration storage
+- Collaborative editing
+- AR preview mode
+- Physics simulation
+
+---
+
+**Built with ❤️ for the robotics community**
