@@ -21,7 +21,7 @@ export const robotConfig = {
       label: "Robot Brand",
       required: true,
       options: [
-        { value: "", label: "Select brand" },
+        // { value: "", label: "Select brand" },
         {
           value: "Universal Robots",
           label: "Universal Robots",

@@ -57,7 +57,7 @@ export class Canvas3D {
 
   async loadRobotFromConfig() {
     if (!configState.robot.configured) {
-      console.warn(" Robot not configured");
+      console.warn("⚠️ Robot not configured");
       return;
     }
 
@@ -253,7 +253,7 @@ export class Canvas3D {
     window.addEventListener("sceneObjectUpdated", (e) => {
       const { id, properties } = e.detail;
 
-      console.log(" Scene object updated event:", id, properties);
+      console.log("🔄 Scene object updated event:", id, properties);
 
       // معالجة خاصة للـ Tool
       if (id === "tool") {
@@ -280,7 +280,7 @@ export class Canvas3D {
     window.addEventListener("removeObjectFrom3D", (e) => {
       const { id } = e.detail;
 
-      console.log(" Removing from 3D scene:", id);
+      console.log("🗑️ Removing from 3D scene:", id);
 
       if (this.sceneManager.getObject(id)) {
         this.sceneManager.removeObject(id);
@@ -316,11 +316,49 @@ export class Canvas3D {
       // Load new tool
       this.loadToolFromConfig();
     });
+
+    // Reload robot when type changes
+    window.addEventListener("reloadRobot", async () => {
+      console.log("🔄 Reloading robot...");
+
+      this.showLoading("Reloading robot model...");
+
+      try {
+        // Remove old robot
+        if (this.robotLoader.robot) {
+          this.sceneManager.removeObject("robot");
+          this.robotLoader.dispose();
+        }
+
+        // Reload robot
+        await this.loadRobotFromConfig();
+
+        // Reload tool (needs to attach to new robot)
+        if (configState.eoat.configured) {
+          // Remove old tool first
+          const oldToolInScene = this.sceneManager.getObject("tool");
+          if (oldToolInScene) {
+            this.sceneManager.removeObject("tool");
+          }
+
+          // Reload tool
+          this.loadToolFromConfig();
+        }
+
+        this.hideLoading();
+
+        console.log("✅ Robot reloaded successfully");
+      } catch (error) {
+        console.error("❌ Failed to reload robot:", error);
+        this.hideLoading();
+        this.showError(`Failed to reload robot: ${error.message}`);
+      }
+    });
   }
 
   // معالجة خاصة لتحديث Tool transform
   updateToolTransform(properties) {
-    console.log(" Updating tool transform:", properties);
+    console.log("🔧 Updating tool transform:", properties);
 
     const endEffector = this.robotLoader.getEndEffector();
 

@@ -5,7 +5,7 @@ import {
 } from "../../state/sceneState.js";
 import { configState, saveConfig } from "../../state/configState.js";
 
-//  Properties Panel Component
+// 🎛️ Properties Panel Component
 export class PropertiesPanel {
   constructor(container) {
     this.container = container;
@@ -56,6 +56,7 @@ export class PropertiesPanel {
   }
 
   renderProperties(id, obj) {
+    // Get original config data if available
     let originalData = null;
     if (id === "robot" && configState.robot.configured) {
       originalData = configState.robot.data;
@@ -203,12 +204,12 @@ export class PropertiesPanel {
               <option value="UR10" ${
                 robotData.type === "UR10" ? "selected" : ""
               }>UR10</option>
-              <option value="UR3" ${
-                robotData.type === "UR3" ? "selected" : ""
-              }>UR3</option>
               <option value="UR20" ${
                 robotData.type === "UR20" ? "selected" : ""
               }>UR20</option>
+              <option value="UR3" ${
+                robotData.type === "UR3" ? "selected" : ""
+              }>UR3</option>
             </select>
           </div>
 
@@ -284,15 +285,15 @@ export class PropertiesPanel {
               id="camera-prop-type"
               class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
             >
-              <option value="Orbbec 300" ${
-                cameraData.type === "Orbbec 300" ? "selected" : ""
-              }>Orbbec 300</option>
-              <option value="Photoneo MotionCam" ${
-                cameraData.type === "Photoneo MotionCam" ? "selected" : ""
-              }>Photoneo MotionCam</option>
-              <option value="Mechmind Nano" ${
-                cameraData.type === "Mechmind Nano" ? "selected" : ""
-              }>Mechmind Nano</option>
+              <option value="Orbbec" ${
+                cameraData.type === "Orbbec" ? "selected" : ""
+              }>Orbbec</option>
+              <option value="RealSense" ${
+                cameraData.type === "RealSense" ? "selected" : ""
+              }>Intel RealSense</option>
+              <option value="Kinect" ${
+                cameraData.type === "Kinect" ? "selected" : ""
+              }>Microsoft Kinect</option>
             </select>
           </div>
 
@@ -496,6 +497,8 @@ export class PropertiesPanel {
 
     // Update robot config if robot
     if (id === "robot") {
+      const currentRobotData = configState.robot.data;
+
       const robotUpdates = {
         name: document.getElementById("robot-prop-name")?.value || "",
         brand: document.getElementById("robot-prop-brand")?.value || "",
@@ -505,6 +508,9 @@ export class PropertiesPanel {
         translation: properties.position,
         rotation: properties.rotation,
       };
+
+      // Check if robot type changed
+      const typeChanged = currentRobotData.type !== robotUpdates.type;
 
       // Save to configState
       saveConfig("robot", robotUpdates);
@@ -516,6 +522,12 @@ export class PropertiesPanel {
         brand: robotUpdates.brand,
         robotType: robotUpdates.type,
       });
+
+      // If type changed, reload robot model
+      if (typeChanged) {
+        console.log("🔄 Robot type changed, reloading model...");
+        window.dispatchEvent(new CustomEvent("reloadRobot"));
+      }
 
       console.log("✅ Robot config updated:", robotUpdates);
     }
