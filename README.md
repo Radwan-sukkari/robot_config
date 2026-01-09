@@ -21,7 +21,7 @@
 - [Technologies](#technologies)
 - [API Reference](#api-reference)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ---
 
@@ -135,6 +135,8 @@ This system provides an end-to-end solution for configuring and simulating indus
 ![EOAT Config](config/docs/images/EoAT_config.png)
 *End-of-arm tool configuration with dynamic fields*
 
+### Live Simulation
+![Live Simulation](config/docs/images/live_simulation)
 
 ---
 ## 🚀 Installation
@@ -579,37 +581,3 @@ MIT License - see [LICENSE](LICENSE) file for details
 - LinkedIn: [Radwan Sukkari](https://linkedin.com/in/radwan-sukkari)
 
 ---
-
-## 🙏 Acknowledgments
-
-- Three.js team for the amazing 3D library
-- Universal Robots for URDF model specifications
-- Open-source robotics community
-- Tailwind CSS for making styling enjoyable
-
----
-
-## 🔮 Roadmap
-
-### Upcoming Features
-- [ ] Joint angle control for robot
-- [ ] Trajectory planning and visualization
-- [ ] Collision detection
-- [ ] Multiple robot support
-- [ ] Export scene as URDF
-- [ ] Import existing configurations
-- [ ] Camera FOV visualization
-- [ ] Touch controls for mobile
-- [ ] Dark/light theme toggle
-- [ ] Multi-language support
-
-### Long-term Vision
-- Real robot connection via ROS
-- Cloud configuration storage
-- Collaborative editing
-- AR preview mode
-- Physics simulation
-
----
-
-**Built with ❤️ for the robotics community**
