@@ -136,7 +136,7 @@ This system provides an end-to-end solution for configuring and simulating indus
 *End-of-arm tool configuration with dynamic fields*
 
 ### Live Simulation
-![Live Simulation](config/docs/images/live_simulation)
+![Live Simulation](config/docs/images/live_simulation.png)
 
 ---
 ## 🚀 Installation
@@ -564,12 +564,6 @@ We welcome contributions! Here's how to get started:
 - Check WebGL support in browser
 - Update graphics drivers
 - Try a different browser
-
----
-
-## 📝 License
-
-MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
