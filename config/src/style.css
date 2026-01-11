@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* الربط مع ألوان التصميم الجديد */
+  --color-primary: #6B1D4F;
+  --color-primaryDark: #4A1436;
+  --color-primaryLight: #A64D79;
+  --color-background: #F8F9FA;
+  --color-backgroundLight: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,32 +20,34 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: #1a1a1a;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - تعديل الألوان لتناسب العنابي */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: var(--color-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #004d40;
+  background: var(--color-primaryLight); /* لون عنابي فاتح */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00332c;
+  background: var(--color-primary); /* لون عنابي غامق عند التحويم */
 }
 
 /* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   to {
     opacity: 1;

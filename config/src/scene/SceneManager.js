@@ -1,6 +1,7 @@
 //هو المسؤول عن "الإضاءة، الكاميرا، والأرضية".
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { getThreeJSColor } from "../utils/themeLoader.js";
 
 export class SceneManager {
   constructor(container) {
@@ -17,7 +18,7 @@ export class SceneManager {
   init() {
     // Scene
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x232931);
+    this.scene.background = new THREE.Color(getThreeJSColor("background"));
 
     // Camera
     this.camera = new THREE.PerspectiveCamera(
@@ -66,29 +67,44 @@ export class SceneManager {
   }
 
   setupLights() {
-    // Ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambientLight = new THREE.AmbientLight(
+      getThreeJSColor("ambient"),
+      0.8
+    );
     this.scene.add(ambientLight);
 
-    // Directional light
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 10, 5);
+    // 2. Directional Light: إضاءة الشمس (الأساسية)
+    const directionalLight = new THREE.DirectionalLight(
+      getThreeJSColor("directional"),
+      1.2
+    );
+    directionalLight.position.set(10, 15, 10); // أبعدنا المصدر ليعطي ظلال أنعم
     directionalLight.castShadow = true;
-    directionalLight.shadow.camera.left = -10;
-    directionalLight.shadow.camera.right = 10;
-    directionalLight.shadow.camera.top = 10;
-    directionalLight.shadow.camera.bottom = -10;
+
+    // تحسين جودة الظل
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 50;
     this.scene.add(directionalLight);
 
-    // Hemisphere light
-    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.4);
+    // 3. Hemisphere Light: لإعطاء لون طبيعي للسماء والأرض
+    // استخدم لون رمادي مزرق للسماء ورمادي غامق للأرض
+    const hemisphereLight = new THREE.HemisphereLight(0xeeeeee, 0x333333, 0.5);
     this.scene.add(hemisphereLight);
-  }
 
+    // 4. Point Light (إضافة جديدة): تعطي "لمعة" احترافية على المفاصل
+    const pointLight = new THREE.PointLight(0xffffff, 0.5);
+    pointLight.position.set(-5, 5, -5);
+    this.scene.add(pointLight);
+  }
   addGrid() {
-    const gridHelper = new THREE.GridHelper(10, 20, 0x004d40, 0x003329);
+    const gridHelper = new THREE.GridHelper(
+      10,
+      20,
+      getThreeJSColor("gridMain"),
+      getThreeJSColor("gridSecondary")
+    );
     gridHelper.position.y = 0.01;
     this.scene.add(gridHelper);
   }
@@ -96,7 +112,7 @@ export class SceneManager {
   addFloor() {
     const floorGeometry = new THREE.PlaneGeometry(10, 10);
     const floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0x1a1d23,
+      color: getThreeJSColor("floor"), //
       roughness: 0.8,
       metalness: 0.2,
     });

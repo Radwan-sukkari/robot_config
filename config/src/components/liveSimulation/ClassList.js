@@ -19,7 +19,7 @@ export class ClassList {
     const objects = getSceneObjects();
 
     this.container.innerHTML = /*html*/ `
-      <div class="h-full bg-[#1a1a1a] border-r border-gray-700 flex flex-col">
+      <div class="h-full bg-gray-100 border-r-2 border-primary flex flex-col">
         
         <!-- Header -->
         <div class="px-4 py-3 bg-primary border-b border-primary-dark">
@@ -48,28 +48,42 @@ export class ClassList {
 
     return /*html*/ `
       <div 
-        class="object-item px-3 py-2 mb-1 rounded cursor-pointer transition-all ${
+        class="object-item px-3 py-2.5 mb-1.5 rounded-lg cursor-pointer transition-all duration-200 border ${
           isSelected
-            ? "bg-primary text-white"
-            : "bg-[#2a2a2a] text-gray-300 hover:bg-[#333]"
+            ? "bg-primary text-white border-primary shadow-md shadow-primary/20 scale-[1.02]"
+            : "bg-white text-gray-700 border-gray-200 hover:border-primary/40 hover:bg-gray-100 hover:shadow-sm"
         }"
         data-object-id="${obj.id}"
       >
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="text-lg">${icon}</span>
-            <span class="text-sm font-medium">${obj.name || obj.id}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-xl ${
+              isSelected ? "text-white" : "text-primary/70"
+            }">${icon}</span>
+            
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold tracking-tight">${
+                obj.name || obj.id
+              }</span>
+              ${
+                obj.type !== "floor"
+                  ? `<span class="text-[10px] uppercase font-bold ${
+                      isSelected ? "text-white/70" : "text-gray-400"
+                    }">${obj.type}</span>`
+                  : ""
+              }
+            </div>
           </div>
-          ${
-            obj.type !== "floor"
-              ? '<span class="text-xs opacity-60">' + obj.type + "</span>"
-              : ""
-          }
+
+          <div class="${isSelected ? "text-white/50" : "text-gray-300"}">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+            </svg>
+          </div>
         </div>
       </div>
     `;
   }
-
   getObjectIcon(type) {
     const icons = {
       floor: "🟫",

@@ -1,0 +1,33 @@
+{
+  "name": "RobCraft Theme",
+  "version": "1.0.0",
+  "colors": {
+    "primary": "#6B1D4F",         
+    "primaryDark": "#4A1436",     
+    "primaryLight": "#A64D79",    
+    "background": "#F8F9FA",      
+    "backgroundLight": "#FFFFFF",
+    "surface": "#FFFFFF",        
+    "text": "#1A1A1A",            
+    "textSecondary": "#6B7280",
+    "textTertiary": "#9CA3AF",
+    "border": "#E5E7EB",          
+    "borderLight": "#F3F4F6",
+    "error": "#D32F2F",           
+    "success": "#2E7D32",
+    "warning": "#ED6C02",
+    "info": "#0288D1"
+  },
+  "threeJS": {
+    "primary": "0x6B1D4F",
+    "background": "0xCCCCCC",  
+    "floor": "0xF9FAFB",         
+    "gridMain": "0x666666",    
+    "gridSecondary": "0x888888",
+    "ambient": "0xffffff",
+    "directional": "0xffffff"
+  },
+  "fonts": {
+    "family": "Inter, system-ui, sans-serif"
+  }
+}

@@ -1,5 +1,6 @@
 import "./style.css";
 import { initHeader } from "./components/header.js";
+import { loadTheme } from "./utils/themeLoader.js";
 import { initSidebar } from "./components/sidebar.js";
 import { initScene } from "./components/scene.js";
 import { ModalFactory } from "./components/modals/ModalFactory.js";
@@ -7,8 +8,11 @@ import { loadConfig, isAllConfigured } from "./state/configState.js";
 import { sceneState } from "./state/sceneState.js";
 import { LiveSimulation } from "./components/liveSimulation/LiveSimulation.js";
 // 🚀 Application Entry Point
-function init() {
+ async  function init() {
+    await loadTheme();
+
   loadConfig();
+  
 
   // فحص الرابط: هل المستخدم كان بالمحاكاة؟
   if (window.location.hash === "#simulation" && isAllConfigured()) {

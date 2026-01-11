@@ -20,7 +20,7 @@ export class PropertiesPanel {
     const selectedObject = selectedId ? sceneState.objects[selectedId] : null;
 
     this.container.innerHTML = /*html*/ `
-      <div class="h-full bg-[#1a1a1a] border-l border-gray-700 flex flex-col">
+      <div class="h-full  bg-gray-100  border-2 border-primary flex flex-col">
         
         <!-- Header -->
         <div class="px-4 py-3 bg-primary border-b border-primary-dark">
@@ -56,7 +56,6 @@ export class PropertiesPanel {
   }
 
   renderProperties(id, obj) {
-    // Get original config data if available
     let originalData = null;
     if (id === "robot" && configState.robot.configured) {
       originalData = configState.robot.data;
@@ -67,71 +66,64 @@ export class PropertiesPanel {
     }
 
     return /*html*/ `
-      <div class="space-y-6">
+      <div class="space-y-6 px-1">
         
-        <!-- Object Info -->
         <div>
-          <h4 class="text-white font-medium mb-2">Object Info</h4>
-          <div class="bg-[#2a2a2a] rounded p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="text-gray-400 text-sm">ID:</span>
-              <span class="text-white text-sm">${id}</span>
+          <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-2 ml-1">Object Info</h4>
+          <div class="bg-white rounded-xl p-4 space-y-3 border border-gray-200 shadow-sm">
+            <div class="flex justify-between items-center border-b border-gray-50 pb-2">
+              <span class="text-gray-400 text-xs font-medium uppercase">ID</span>
+              <span class="text-gray-900 text-sm font-mono bg-gray-50 px-2 py-0.5 rounded">${id}</span>
             </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400 text-sm">Type:</span>
-              <span class="text-white text-sm">${obj.type}</span>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-400 text-xs font-medium uppercase">Type</span>
+              <span class="text-primary text-sm font-semibold">${
+                obj.type
+              }</span>
             </div>
           </div>
         </div>
 
-        <!-- Robot Specific Properties -->
         ${
           id === "robot" && originalData
             ? this.renderRobotProperties(originalData)
             : ""
         }
-
-        <!-- Tool Specific Properties -->
         ${
           id === "tool" && originalData
             ? this.renderToolProperties(originalData)
             : ""
         }
-
-        <!-- Camera Specific Properties -->
         ${
           id === "camera" && originalData
             ? this.renderCameraProperties(originalData)
             : ""
         }
         
-        <!-- Position -->
         <div>
-          <h4 class="text-white font-medium mb-2">Position (mm)</h4>
-          <div class="grid grid-cols-3 gap-2">
+          <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-2 ml-1">Position (mm)</h4>
+          <div class="grid grid-cols-3 gap-2 bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
             ${this.renderInput("position-x", "X", obj.position?.x || 0)}
             ${this.renderInput("position-y", "Y", obj.position?.y || 0)}
             ${this.renderInput("position-z", "Z", obj.position?.z || 0)}
           </div>
         </div>
         
-        <!-- Rotation -->
         <div>
-          <h4 class="text-white font-medium mb-2">Rotation (deg)</h4>
-          <div class="grid grid-cols-3 gap-2">
+          <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-2 ml-1">Rotation (deg)</h4>
+          <div class="grid grid-cols-3 gap-2 bg-white p-3 rounded-xl border border-gray-200 shadow-sm">
             ${this.renderInput("rotation-rx", "RX", obj.rotation?.x || 0)}
             ${this.renderInput("rotation-ry", "RY", obj.rotation?.y || 0)}
             ${this.renderInput("rotation-rz", "RZ", obj.rotation?.z || 0)}
           </div>
         </div>
         
-        <!-- Update & Delete Buttons -->
-        <div class="space-y-2">
+        <div class="space-y-3 pt-4">
           <button 
             id="update-properties-btn"
-            class="w-full px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-all font-medium"
+            class="w-full px-4 py-3 bg-primary text-white rounded-xl hover:bg-primary-dark transition-all font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2"
           >
-            ✓ Update
+            <span>✓</span> Update Changes
           </button>
           
           ${
@@ -139,9 +131,9 @@ export class PropertiesPanel {
               ? `
             <button 
               id="delete-object-btn"
-              class="w-full px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all font-medium"
+              class="w-full px-4 py-3 bg-white text-red-600 border border-red-100 rounded-xl hover:bg-red-50 transition-all font-semibold text-sm flex items-center justify-center gap-2"
             >
-              🗑️ Delete
+              <span>🗑️</span> Delete Object
             </button>
           `
               : ""
@@ -154,116 +146,112 @@ export class PropertiesPanel {
 
   renderRobotProperties(robotData) {
     return /*html*/ `
-      <div>
-        <h4 class="text-white font-medium mb-2">Robot Configuration</h4>
-        <div class="space-y-3">
+      <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+        <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-4 border-b border-gray-50 pb-2">Robot Configuration</h4>
+        <div class="space-y-4">
           
-          <!-- Robot Name -->
           <div>
-            <label class="block text-gray-400 text-xs mb-1">Name</label>
+            <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Robot Name</label>
             <input 
               type="text" 
               id="robot-prop-name"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
+              class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all font-medium"
               value="${robotData.name || ""}"
+              placeholder="Enter name..."
             />
           </div>
 
-          <!-- Robot Brand -->
-          <div>
-            <label class="block text-gray-400 text-xs mb-1">Brand</label>
-            <select 
-              id="robot-prop-brand"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            >
-              <option value="Universal Robots" ${
-                robotData.brand === "Universal Robots" ? "selected" : ""
-              }>Universal Robots</option>
-              <option value="ABB" ${
-                robotData.brand === "ABB" ? "selected" : ""
-              }>ABB</option>
-              <option value="KUKA" ${
-                robotData.brand === "KUKA" ? "selected" : ""
-              }>KUKA</option>
-              <option value="Fanuc" ${
-                robotData.brand === "Fanuc" ? "selected" : ""
-              }>Fanuc</option>
-            </select>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Brand</label>
+              <select 
+                id="robot-prop-brand"
+                class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:border-primary focus:outline-none appearance-none cursor-pointer"
+              >
+                <option value="Universal Robots" ${
+                  robotData.brand === "Universal Robots" ? "selected" : ""
+                }>Universal Robots</option>
+                <option value="ABB" ${
+                  robotData.brand === "ABB" ? "selected" : ""
+                }>ABB</option>
+                <option value="KUKA" ${
+                  robotData.brand === "KUKA" ? "selected" : ""
+                }>KUKA</option>
+                <option value="Fanuc" ${
+                  robotData.brand === "Fanuc" ? "selected" : ""
+                }>Fanuc</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Model</label>
+              <select 
+                id="robot-prop-type"
+                class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:border-primary focus:outline-none"
+              >
+                <option value="UR5" ${
+                  robotData.type === "UR5" ? "selected" : ""
+                }>UR5</option>
+                <option value="UR10" ${
+                  robotData.type === "UR10" ? "selected" : ""
+                }>UR10</option>
+                <option value="UR20" ${
+                  robotData.type === "UR20" ? "selected" : ""
+                }>UR20</option>
+                <option value="UR3" ${
+                  robotData.type === "UR3" ? "selected" : ""
+                }>UR3</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Robot Type -->
-          <div>
-            <label class="block text-gray-400 text-xs mb-1">Type</label>
-            <select 
-              id="robot-prop-type"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            >
-              <option value="UR5" ${
-                robotData.type === "UR5" ? "selected" : ""
-              }>UR5</option>
-              <option value="UR10" ${
-                robotData.type === "UR10" ? "selected" : ""
-              }>UR10</option>
-              <option value="UR20" ${
-                robotData.type === "UR20" ? "selected" : ""
-              }>UR20</option>
-              <option value="UR3" ${
-                robotData.type === "UR3" ? "selected" : ""
-              }>UR3</option>
-            </select>
-          </div>
-
-          <!-- Robot IP -->
-          <div>
-            <label class="block text-gray-400 text-xs mb-1">Robot IP</label>
-            <input 
-              type="text" 
-              id="robot-prop-ip"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-              value="${robotData.ip || ""}"
-            />
-          </div>
-
-          <!-- PC IP -->
-          <div>
-            <label class="block text-gray-400 text-xs mb-1">PC/Host IP</label>
-            <input 
-              type="text" 
-              id="robot-prop-pcip"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-              value="${robotData.pcIp || ""}"
-            />
+          <div class="space-y-3 pt-2">
+            <div>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Robot IP Address</label>
+              <input 
+                type="text" 
+                id="robot-prop-ip"
+                class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none"
+                value="${robotData.ip || "192.168.1.1"}"
+              />
+            </div>
+            <div>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">PC/Host IP Address</label>
+              <input 
+                type="text" 
+                id="robot-prop-pcip"
+                class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none"
+                value="${robotData.pcIp || "192.168.1.100"}"
+              />
+            </div>
           </div>
           
         </div>
       </div>
     `;
   }
-
   renderToolProperties(toolData) {
     return /*html*/ `
-      <div>
-        <h4 class="text-white font-medium mb-2">Tool Configuration</h4>
-        <div class="space-y-3">
+      <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+        <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-4 border-b border-gray-50 pb-2">Tool Configuration</h4>
+        <div class="space-y-4">
           
-          <!-- Shape -->
           <div>
-            <label class="block text-gray-400 text-xs mb-1">Shape</label>
+            <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">End Effector Shape</label>
             <select 
               id="tool-prop-shape"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
+              class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:border-primary outline-none"
             >
               <option value="cylinder" ${
                 toolData.shape === "cylinder" ? "selected" : ""
-              }>Cylinder</option>
+              }>Cylinder (Pneumatic)</option>
               <option value="cube" ${
                 toolData.shape === "cube" ? "selected" : ""
-              }>Cube</option>
+              }>Cube (Gripper)</option>
             </select>
           </div>
 
-          <!-- Dynamic fields based on shape -->
-          <div id="tool-dynamic-fields">
+          <div id="tool-dynamic-fields" class="pt-2 border-t border-gray-50">
             ${this.renderToolDynamicFields(toolData)}
           </div>
           
@@ -274,96 +262,73 @@ export class PropertiesPanel {
 
   renderCameraProperties(cameraData) {
     return /*html*/ `
-      <div>
-        <h4 class="text-white font-medium mb-2">Camera Configuration</h4>
-        <div class="space-y-3">
+      <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+        <h4 class="text-gray-700 font-bold text-xs uppercase tracking-wider mb-4 border-b border-gray-50 pb-2">Camera Configuration</h4>
+        <div class="space-y-4">
           
-          <!-- Camera Type -->
           <div>
-            <label class="block text-gray-400 text-xs mb-1">Type</label>
+            <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Sensor Model</label>
             <select 
               id="camera-prop-type"
-              class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
+              class="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:border-primary outline-none"
             >
               <option value="Orbbec" ${
                 cameraData.type === "Orbbec" ? "selected" : ""
-              }>Orbbec</option>
+              }>Orbbec Astra</option>
               <option value="RealSense" ${
                 cameraData.type === "RealSense" ? "selected" : ""
-              }>Intel RealSense</option>
+              }>Intel RealSense D435</option>
               <option value="Kinect" ${
                 cameraData.type === "Kinect" ? "selected" : ""
-              }>Microsoft Kinect</option>
+              }>Microsoft Kinect v2</option>
             </select>
           </div>
 
-          <!-- Resolution -->
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-gray-400 text-xs mb-1">Width (px)</label>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Width (px)</label>
               <input 
                 type="number" 
                 id="camera-prop-width"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
+                class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none"
                 value="${cameraData.width || 1920}"
               />
             </div>
             <div>
-              <label class="block text-gray-400 text-xs mb-1">Height (px)</label>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Height (px)</label>
               <input 
                 type="number" 
                 id="camera-prop-height"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
+                class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none"
                 value="${cameraData.height || 1080}"
               />
             </div>
           </div>
 
-          <!-- Focal Points -->
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-2 gap-x-3 gap-y-3 pt-2">
             <div>
-              <label class="block text-gray-400 text-xs mb-1">FX</label>
-              <input 
-                type="number" 
-                id="camera-prop-fx"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-                value="${cameraData.fx || 0}"
-                step="0.001"
-              />
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Focal X (fx)</label>
+              <input type="number" id="camera-prop-fx" class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none" value="${
+                cameraData.fx || 0
+              }" step="0.001" />
             </div>
             <div>
-              <label class="block text-gray-400 text-xs mb-1">FY</label>
-              <input 
-                type="number" 
-                id="camera-prop-fy"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-                value="${cameraData.fy || 0}"
-                step="0.001"
-              />
-            </div>
-          </div>
-
-          <!-- Central Points -->
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-gray-400 text-xs mb-1">CX</label>
-              <input 
-                type="number" 
-                id="camera-prop-cx"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-                value="${cameraData.cx || 0}"
-                step="0.001"
-              />
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Focal Y (fy)</label>
+              <input type="number" id="camera-prop-fy" class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none" value="${
+                cameraData.fy || 0
+              }" step="0.001" />
             </div>
             <div>
-              <label class="block text-gray-400 text-xs mb-1">CY</label>
-              <input 
-                type="number" 
-                id="camera-prop-cy"
-                class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-                value="${cameraData.cy || 0}"
-                step="0.001"
-              />
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Center X (cx)</label>
+              <input type="number" id="camera-prop-cx" class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none" value="${
+                cameraData.cx || 0
+              }" step="0.001" />
+            </div>
+            <div>
+              <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1">Center Y (cy)</label>
+              <input type="number" id="camera-prop-cy" class="no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary outline-none" value="${
+                cameraData.cy || 0
+              }" step="0.001" />
             </div>
           </div>
           
@@ -373,79 +338,90 @@ export class PropertiesPanel {
   }
 
   renderToolDynamicFields(toolData) {
+    // كلاسات الألوان الجديدة (خلفية فاتحة ونصوص داكنة)
+    const inputClass =
+      "no-spinner w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-lg border border-gray-200 text-sm font-mono focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all";
+    const labelClass =
+      "block text-gray-500 text-[10px] uppercase font-bold mb-1 ml-1";
+
     if (toolData.shape === "cylinder") {
       return /*html*/ `
+      <div class="space-y-3">
         <div>
-          <label class="block text-gray-400 text-xs mb-1">Radius (mm)</label>
+          <label class="${labelClass}">Radius (mm)</label>
           <input 
             type="number" 
-            id="tool-prop-radius"
-            class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            value="${toolData.radius || 0}"
-            step="0.1"
+            id="tool-prop-radius" 
+            class="${inputClass}" 
+            value="${toolData.radius || 0}" 
+            step="0.1" 
           />
         </div>
-        <div class="mt-3">
-          <label class="block text-gray-400 text-xs mb-1">Height (mm)</label>
+        <div>
+          <label class="${labelClass}">Height (mm)</label>
           <input 
             type="number" 
-            id="tool-prop-height"
-            class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            value="${toolData.height || 0}"
-            step="0.1"
+            id="tool-prop-height" 
+            class="${inputClass}" 
+            value="${toolData.height || 0}" 
+            step="0.1" 
           />
         </div>
-      `;
+      </div>
+    `;
     } else if (toolData.shape === "cube") {
       return /*html*/ `
+      <div class="space-y-3">
         <div>
-          <label class="block text-gray-400 text-xs mb-1">Length (mm)</label>
+          <label class="${labelClass}">Length (mm)</label>
           <input 
             type="number" 
-            id="tool-prop-length"
-            class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            value="${toolData.length || 0}"
-            step="0.1"
+            id="tool-prop-length" 
+            class="${inputClass}" 
+            value="${toolData.length || 0}" 
+            step="0.1" 
           />
         </div>
-        <div class="mt-3">
-          <label class="block text-gray-400 text-xs mb-1">Width (mm)</label>
+        <div>
+          <label class="${labelClass}">Width (mm)</label>
           <input 
             type="number" 
-            id="tool-prop-width"
-            class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            value="${toolData.width || 0}"
-            step="0.1"
+            id="tool-prop-width" 
+            class="${inputClass}" 
+            value="${toolData.width || 0}" 
+            step="0.1" 
           />
         </div>
-        <div class="mt-3">
-          <label class="block text-gray-400 text-xs mb-1">Height (mm)</label>
+        <div>
+          <label class="${labelClass}">Height (mm)</label>
           <input 
             type="number" 
-            id="tool-prop-height"
-            class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 text-sm"
-            value="${toolData.height || 0}"
-            step="0.1"
+            id="tool-prop-height" 
+            class="${inputClass}" 
+            value="${toolData.height || 0}" 
+            step="0.1" 
           />
         </div>
-      `;
+      </div>
+    `;
     }
     return "";
   }
 
   renderInput(id, label, value) {
     return /*html*/ `
-      <div>
-        <label class="block text-gray-400 text-xs mb-1 text-center">${label}</label>
-        <input 
-          type="number" 
-          id="${id}"
-          class="w-full bg-[#2a2a2a] text-white px-2 py-2 rounded border border-gray-600 text-center text-sm focus:border-primary outline-none"
-          value="${value}"
-          step="0.1"
-        />
-      </div>
-    `;
+    <div>
+      <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 text-center tracking-wider">${label}</label>
+      <input 
+        type="number" 
+        id="${id}"
+        /* أضفنا no-spinner ونسقنا الألوان لتناسب الخلفية الفضية */
+        class="no-spinner w-full bg-gray-50 text-gray-900 px-2 py-2 rounded-lg border border-gray-200 text-center text-sm font-mono focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-inner"
+        value="${value}"
+        step="0.1"
+      />
+    </div>
+  `;
   }
 
   attachEvents(selectedId) {

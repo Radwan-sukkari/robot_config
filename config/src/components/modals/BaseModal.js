@@ -16,39 +16,39 @@ export class BaseModal {
   create() {
     const modal = document.createElement("div");
     modal.id = `${this.id}-modal`;
+    // جعلنا الـ Overlay (الخلفية خلف المودال) أفتح قليلاً لإبراز التصميم الجديد
     modal.className =
-      "fixed inset-0 bg-black/70 hidden items-center justify-center z-50";
+      "fixed inset-0 bg-gray-900/50 hidden items-center justify-center z-50 backdrop-blur-sm";
 
     modal.innerHTML = /*html*/ `
-      <div class="modal-content bg-[#1a1a1a] rounded-lg w-[450px] max-h-[90vh] overflow-y-auto shadow-2xl">
-        <!-- Header -->
-        <div class="bg-primary text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
-          <h2 class="text-xl font-bold uppercase tracking-wide">${
-            this.title
-          }</h2>
-          <button class="text-white hover:text-gray-300 text-2xl" id="${
+      <div class="modal-content bg-white rounded-xl w-[480px] max-h-[90vh] overflow-hidden shadow-2xl border border-gray-100">
+        <div class="bg-primary text-white px-6 py-5 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <h2 class="text-lg font-semibold tracking-tight">${this.title}</h2>
+          </div>
+          <button class="text-white/80 hover:text-white transition-colors text-3xl leading-none" id="${
             this.id
           }-close-x">&times;</button>
         </div>
         
-        <!-- Content -->
-        <div class="p-6 space-y-4" id="${this.id}-content">
+        <div class="p-6 space-y-5 overflow-y-auto max-h-[60vh] custom-scrollbar" id="${
+          this.id
+        }-content">
           ${this.renderFields()}
         </div>
         
-        <!-- Footer -->
-        <div class="px-6 py-4 bg-[#1a1a1a] flex justify-end gap-3 border-t border-gray-700 rounded-b-lg">
+        <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3 border-t border-gray-100">
           <button 
             id="${this.id}-cancel-btn"
-            class="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-all font-medium"
+            class="px-5 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all font-medium text-sm"
           >
             Cancel
           </button>
           <button 
             id="${this.id}-ok-btn"
-            class="px-6 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-all font-medium"
+            class="px-5 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-dark shadow-md shadow-primary/20 transition-all font-medium text-sm"
           >
-            OK
+            Save Configuration
           </button>
         </div>
       </div>
@@ -99,15 +99,21 @@ export class BaseModal {
 
   renderInput(field) {
     return /*html*/ `
-      <div>
-        <label class="block text-white text-sm font-medium mb-2">
+      <div class="space-y-1.5">
+        <label class="block text-gray-700 text-sm font-semibold ml-0.5">
           ${field.label}
-          ${field.required ? '<span class="text-red-500">*</span>' : ""}
+          ${field.required ? '<span class="text-error ml-1">*</span>' : ""}
         </label>
+        
         <input 
           type="${field.type}" 
           id="${this.id}-${field.id}"
-          class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+          class="w-full bg-gray-50 text-gray-900 px-4 py-2.5 rounded-lg border border-gray-200 
+          
+                 placeholder:text-gray-400
+                 hover:bg-gray-100 hover:border-gray-300
+                 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 
+                 outline-none transition-all duration-200 shadow-inner"
           placeholder="${field.placeholder || ""}"
           value="${field.value || ""}"
           ${field.required ? "required" : ""}
@@ -121,41 +127,58 @@ export class BaseModal {
     const options = field.options
       .map(
         (opt) =>
-          `<option value="${opt.value}" ${opt.selected ? "selected" : ""}>${
-            opt.label
-          }</option>`
+          `<option value="${opt.value}" ${
+            opt.selected ? "selected" : ""
+          } class="text-gray-900">
+          ${opt.label}
+        </option>`
       )
       .join("");
 
     return /*html*/ `
-      <div>
-        <label class="block text-white text-sm font-medium mb-2">
-          ${field.label}
-          ${field.required ? '<span class="text-red-500">*</span>' : ""}
-        </label>
+    <div class="space-y-1.5">
+      <label class="block text-gray-700 text-sm font-semibold ml-0.5">
+        ${field.label}
+        ${field.required ? '<span class="text-error ml-1">*</span>' : ""}
+      </label>
+      
+      <div class="relative">
         <select 
           id="${this.id}-${field.id}"
-          class="w-full bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+          class="w-full bg-gray-50 text-gray-900 px-4 py-2.5 rounded-lg border border-gray-200 
+                 appearance-none hover:bg-gray-100 hover:border-gray-300
+                 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 
+                 outline-none transition-all duration-200 cursor-pointer shadow-inner"
           ${field.required ? "required" : ""}
         >
           ${options}
         </select>
+        
+        <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
       </div>
-    `;
+    </div>
+  `;
   }
-
   renderGrid(field) {
     const inputs = field.inputs
       .map(
         (input) =>
           `<div>
-        <label class="block text-gray-400 text-xs mb-1 text-center">${
-          input.placeholder
-        }</label>
+        <label class="block text-gray-500 text-[10px] uppercase font-bold mb-1 text-center tracking-wider">
+          ${input.placeholder}
+        </label>
         <input 
           type="number" 
           id="${this.id}-${input.id}"
-          class="w-full bg-[#2a2a2a] text-white px-2 py-2 rounded border border-gray-600 text-center focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+          class="w-full bg-gray-50 text-gray-900 px-2 py-2 rounded-lg border border-gray-200 
+                 text-center font-mono text-sm
+                 hover:bg-gray-100 hover:border-gray-300
+                 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 
+                 outline-none transition-all duration-200 shadow-inner"
           placeholder="${input.placeholder}"
           value="${input.value || 0}"
           step="${input.step || "0.1"}"
@@ -165,11 +188,14 @@ export class BaseModal {
       .join("");
 
     return /*html*/ `
-      <div>
-        <label class="block text-white text-sm font-medium mb-2">${
+      <div class="py-2">
+        <label class="block text-gray-700 text-sm font-semibold mb-3 ml-0.5">${
           field.label
         }</label>
-        <div class="grid grid-cols-${field.columns || 3} gap-3">
+        
+        <div class="grid grid-cols-${
+          field.columns || 3
+        } gap-3 bg-gray-50/50 p-3 rounded-xl border border-dashed border-gray-200">
           ${inputs}
         </div>
       </div>
@@ -178,16 +204,17 @@ export class BaseModal {
 
   renderFileInput(field) {
     return /*html*/ `
-      <div>
-        <label class="block text-white text-sm font-medium mb-2">
+      <div class="space-y-1.5">
+        <label class="block text-gray-700 text-sm font-semibold ml-0.5">
           ${field.label}
-          ${field.required ? '<span class="text-red-500">*</span>' : ""}
+          ${field.required ? '<span class="text-error ml-1">*</span>' : ""}
         </label>
+        
         <div class="flex gap-2">
           <input 
             type="text" 
             id="${this.id}-${field.id}-display"
-            class="flex-1 bg-[#2a2a2a] text-white px-3 py-2 rounded border border-gray-600 outline-none"
+            class="flex-1 bg-gray-50 text-gray-800 px-3 py-2 rounded-lg border border-gray-200 outline-none text-sm shadow-inner"
             placeholder="${field.placeholder || "No file selected"}"
             value="${field.value || ""}"
             readonly
@@ -195,18 +222,24 @@ export class BaseModal {
           <button
             type="button"
             id="${this.id}-${field.id}-btn"
-            class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-all"
+            class="px-5 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all shadow-md shadow-primary/20 text-sm font-medium whitespace-nowrap"
           >
             Browse
           </button>
         </div>
+        
         <input 
           type="file" 
           id="${this.id}-${field.id}"
           class="hidden"
           accept="${field.accept || "*"}"
         />
-        <p class="text-gray-400 text-xs mt-1">${field.hint || ""}</p>
+        
+        ${
+          field.hint
+            ? `<p class="text-gray-400 text-[11px] mt-1 ml-1">ℹ️ ${field.hint}</p>`
+            : ""
+        }
       </div>
     `;
   }
